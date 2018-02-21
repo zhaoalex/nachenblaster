@@ -1,0 +1,15 @@
+Alex Zhao
+CS 32, Project 3
+report.txt
+UID: 904907409
+
+Description of each public member function in each class, why it's defined in that class, why it's virtual or not
+
+In Actor:
+doSomething() is pure virtual because every Actor does something and in a different way
+
+Anything failed to finish / has bugs
+
+Design decisions / assumptions
+
+How you tested each class (1-2 paragraphs per class)
