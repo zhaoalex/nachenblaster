@@ -2,6 +2,7 @@
 #include "GameConstants.h"
 #include <string>
 #include "Star.h"
+#include "NachenBlaster.h"
 
 using namespace std;
 
@@ -17,6 +18,10 @@ StudentWorld::StudentWorld(string assetDir)
 {
 }
 
+StudentWorld::~StudentWorld() { // free anything that hasn't been freed
+    cleanUp();
+}
+
 /**
  * Constructs representation of the current level in your StudentWorld object and populating it
  * with initial objects (e.g., stars), using one or more data structures that you come up with.
@@ -29,6 +34,7 @@ int StudentWorld::init()
     m_numDestroyed = 0;
     
     // Place NachenBlaster
+    m_actors.push_back(new NachenBlaster(this));
     
     // Place 30 stars
     for (int i = 0; i < 30; i++) {
@@ -54,8 +60,8 @@ int StudentWorld::move()
     for (int i = 0; i < m_actors.size(); i++) { // could also use iterator
         if (m_actors[i]->isAlive()) {
             m_actors[i]->doSomething();
-            // if nachen blaster died, return
-            // if nachen blaster won, return
+            // TODO if nachen blaster died, return
+            // TODO if nachen blaster won, return
         }
     }
     
@@ -71,9 +77,10 @@ int StudentWorld::move()
     }
     
     // update display text
+    // TODO
     
     // possibly introduce new objects
-    introduceNewObjects();
+    introduceNewObjects(); // TODO should this be at start of fcn?
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -83,6 +90,11 @@ int StudentWorld::move()
  */
 void StudentWorld::cleanUp()
 {
+    std::vector<Actor*>::iterator it = m_actors.begin();
+    while (it != m_actors.end()) {
+        delete *it;
+        it = m_actors.erase(it);
+    }
 }
 
 /**
@@ -97,6 +109,7 @@ void StudentWorld::introduceNewObjects() {
     }
     
     // Introduce any alien ships
+    // TODO
     // int maxOnScreen = 4 + (0.5 * getLevel());
     
 }

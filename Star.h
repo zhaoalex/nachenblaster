@@ -15,9 +15,9 @@ class StudentWorld;
 class Star : public Actor {
 public:
     Star(StudentWorld* world, double startX, double startY, double size)
-    : Actor(world, IID_STAR, startX, startY, 0, size, 3) {
-        
-    }
+    : Actor(world, IID_STAR, startX, startY, 0, size, 3) {}
+    virtual ~Star() {}
+    
     virtual void doSomething();
 private:
     

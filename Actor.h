@@ -10,7 +10,10 @@ class StudentWorld;
 class Actor : public GraphObject {
 public:
     Actor(StudentWorld* world, int imageID, double startX, double startY, int dir = 0, double size = 1.0, int depth = 0)
-    : GraphObject(imageID, startX, startY, dir, size, depth), m_world(world), m_state(true) {}
+    : GraphObject(imageID, startX, startY, dir, size, depth) {
+        m_world = world;
+        m_state = true; // default to true
+    }
     virtual ~Actor() {}
     
     virtual void doSomething() = 0;
