@@ -15,17 +15,19 @@ class StudentWorld;
 
 class DamageableObject : public Actor {
 public:
-    DamageableObject(StudentWorld* world, int imageID, double startX, double startY, int dir, double size, int depth, double hitPoints)
+    DamageableObject(StudentWorld* world, int imageID, double startX, double startY, int dir, double size, int depth, double health)
     : Actor(world, imageID, startX, startY, dir, size, depth) {
-        m_hitPoints = hitPoints;
+        m_health = health;
     }
     virtual ~DamageableObject() {}
     
     virtual void doSomething() = 0;
+    virtual void sufferDamage(double amt, int cause) = 0;
     
-    double hitPoints() const { return m_hitPoints; }
+    void setHealth(double amt) { m_health = amt; }
+    double getHealth() const { return m_health; }
 private:
-    double m_hitPoints;
+    double m_health;
 };
 
 #endif /* DamageableObject_h */

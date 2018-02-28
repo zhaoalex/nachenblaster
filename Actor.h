@@ -49,7 +49,7 @@ public:
     NachenBlaster(StudentWorld* world)
     : Actor(world, IID_NACHENBLASTER, 0, 128) {
         m_health = 50;
-        m_cabbage = 30;
+        m_cabbages = 30;
         m_torpedoes = 0;
     }
     virtual ~NachenBlaster() {}
@@ -57,7 +57,7 @@ public:
     virtual void doSomething();
 private:
     int m_health;
-    int m_cabbage;
+    int m_cabbages;
     int m_torpedoes;
 };
 */

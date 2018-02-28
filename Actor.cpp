@@ -49,8 +49,8 @@ void NachenBlaster::doSomething() {
     }
     
     // Receive one cabbage point per tick
-    if (m_cabbage < 30) {
-        m_cabbage++;
+    if (m_cabbages < 30) {
+        m_cabbages++;
     }
 }
 */

@@ -40,7 +40,8 @@ int StudentWorld::init()
     m_numDestroyed = 0;
     
     // Place NachenBlaster
-    m_actors.push_back(new NachenBlaster(this));
+    m_player = new NachenBlaster(this);
+    m_actors.push_back(m_player);
     
     // Place 30 stars
     for (int i = 0; i < 30; i++) {
@@ -117,8 +118,9 @@ Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
  * otherwise return a null pointer.
  */
 NachenBlaster* StudentWorld::getCollidingPlayer(const Actor* a) const {
-    // TODO
-    return nullptr;
+    double dist = sqrt(pow(m_player->getX() - a->getX(), 2) + pow(m_player->getY() - a->getY(), 2));
+    if (dist < (0.75 * (m_player->getRadius() + a->getRadius()))) return m_player;
+    else return nullptr;
 }
 
 /**
@@ -163,11 +165,15 @@ void StudentWorld::introduceNewObjects() {
     
 }
 
+/**
+ * Updates the game text at the top of the window every tick
+ */
 void StudentWorld::updateGameText() {
     ostringstream oss;
     oss.setf(ios::fixed);
     oss.precision(0);
-    oss << "Lives: " << getLives() << " Health: " << "TEMP" << " Score: " << getScore()
-        << " Level: " << getLevel() << " Cabbages: " << "TEMP" << " Torpedoes: " << "TEMP"; // TODO
+    oss << "Lives: " << getLives() << " Health: " << (m_player->getHealth() / 50.0 * 100)
+        << "% Score: " << getScore() << " Level: " << getLevel()
+        << " Cabbages: " << (m_player->numCabbages() / 30.0 * 100) << "% Torpedoes: " << m_player->numTorpedoes();
     setGameStatText(oss.str());
 }

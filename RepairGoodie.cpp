@@ -10,5 +10,5 @@
 #include "StudentWorld.h"
 
 void RepairGoodie::grantPowerup(NachenBlaster *player) {
-    // TODO increase hit points by 10 (not exceeding 50)
+    player->incHealth(10);
 }

@@ -10,6 +10,5 @@
 #include "StudentWorld.h"
 
 void TorpedoGoodie::grantPowerup(NachenBlaster *player) {
-    // TODO give 5 torpedoes
-    // no limit
+    player->incTorpedoes(5);
 }

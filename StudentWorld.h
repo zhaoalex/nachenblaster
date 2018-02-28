@@ -36,6 +36,7 @@ private:
     int m_numDestroyed; // number of destroyed aliens
     int m_numRemaining; // number of aliens required to be destroyed in order to move to next level
     
+    NachenBlaster* m_player;
 };
 
 #endif // STUDENTWORLD_H_

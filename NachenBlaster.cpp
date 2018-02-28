@@ -39,22 +39,33 @@ void NachenBlaster::doSomething() {
                 break;
 
             case KEY_PRESS_SPACE: // fire cabbage
-                if (m_cabbage >= 5) {
+                if (m_cabbages >= 5) {
                     getWorld()->addActor(new ExtraLifeGoodie(getWorld(), getX() + 12, getY())); // TODO change to cabbage
                     getWorld()->playSound(SOUND_PLAYER_SHOOT);
+                    m_cabbages -= 5;
                 }
                 break;
             case KEY_PRESS_TAB: // fire torpedo
                 if (m_torpedoes > 0) {
                     // TODO fire torpedo
                     getWorld()->playSound(SOUND_TORPEDO);
+                    m_torpedoes--;
                 }
                 break;
         }
     }
     
     // Receive one cabbage point per tick
-    if (m_cabbage < 30) {
-        m_cabbage++;
+    if (m_cabbages < 30) {
+        m_cabbages++;
     }
+}
+
+void NachenBlaster::incHealth(double amt) {
+    if (getHealth() + amt > 50) setHealth(50);
+    else setHealth(getHealth() + amt);
+}
+
+void NachenBlaster::sufferDamage(double amt, int cause) {
+    
 }

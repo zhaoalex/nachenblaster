@@ -8,24 +8,27 @@
 #ifndef NachenBlaster_h
 #define NachenBlaster_h
 
-#include "Actor.h"
+#include "DamageableObject.h"
 
-class NachenBlaster : public Actor {
+class NachenBlaster : public DamageableObject {
 public:
     NachenBlaster(StudentWorld* world)
-    : Actor(world, IID_NACHENBLASTER, 0, 128) {
-        m_health = 50;
-        m_cabbage = 30;
+    : DamageableObject(world, IID_NACHENBLASTER, 0, 128, 0, 1.0, 0, 50) {
+        m_cabbages = 30;
         m_torpedoes = 0;
     }
     virtual ~NachenBlaster() {}
     
     virtual void doSomething();
+    void incHealth(double amt);
+    virtual void sufferDamage(double amt, int cause);
     
+    void incTorpedoes(int amt) { m_torpedoes += amt; }
+    int numTorpedoes() const { return m_torpedoes; }
+    int numCabbages() const { return m_cabbages; }
     
 private:
-    int m_health;
-    int m_cabbage;
+    int m_cabbages;
     int m_torpedoes;
 };
 
