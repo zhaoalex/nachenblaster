@@ -21,7 +21,7 @@ public:
     
     bool isAlive() const { return m_state; } // get state
     void setDead() { m_state = false; } // set dead
-    
+    bool isAlien() const { return false; } // return true if alien TODO TODO TODO
     
     // TODO protected?
     bool isOffScreenLR() const { return (getX() < 0) || (getX() >= VIEW_WIDTH); } // return true if off screen left or right

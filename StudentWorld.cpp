@@ -1,14 +1,13 @@
-#include "StudentWorld.h"
-#include "GameConstants.h"
 #include <string>
 #include <iostream>
 #include <sstream>
+
+#include "StudentWorld.h"
+#include "GameConstants.h"
 #include "Actor.h"
 
-#include "Star.h"
 #include "NachenBlaster.h"
-
-
+#include "Star.h"
 
 using namespace std;
 
@@ -60,34 +59,28 @@ int StudentWorld::init()
  */
 int StudentWorld::move()
 {
-    // decLives();
-    // return GWSTATUS_PLAYER_DIED;
-    
     // let each actor do something
-    for (int i = 0; i < m_actors.size(); i++) { // could also use iterator
+    for (int i = 0; i < m_actors.size(); i++) {
         if (m_actors[i]->isAlive()) {
             m_actors[i]->doSomething();
-            // TODO if nachen blaster died, return
+            if (!m_player->isAlive()) { // if nachenblaster died during this tick
+                decLives();
+                return GWSTATUS_PLAYER_DIED;
+            }
             // TODO if nachen blaster won, return
         }
     }
     
     // remove dead game objects
-    vector<Actor*>::iterator it = m_actors.begin();
-    while (it != m_actors.end()) {
-        if (!(*it)->isAlive()) {
-            delete *it;
-            it = m_actors.erase(it);
-        } else {
-            it++;
-        }
-    }
+    removeDeadGameObjects();
     
     // update display text
     updateGameText();
     
     // possibly introduce new objects
-    introduceNewObjects(); // TODO should this be at start of fcn?
+    tryIntroduceNewObjects();
+    
+    // player hasn't finished the level and hasn't died, so continue the game
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -105,7 +98,7 @@ void StudentWorld::cleanUp()
 }
 
 /**
- * If at least one alien has collided with a, return a pointer to one of them;
+ * If at least one alien has collided with actor a, return a pointer to one of them;
  * otherwise return a null pointer.
  */
 Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
@@ -114,7 +107,7 @@ Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
 }
 
 /**
- * If player collided with a, return a pointer to the player;
+ * If player collided with actor a, return a pointer to the player;
  * otherwise return a null pointer.
  */
 NachenBlaster* StudentWorld::getCollidingPlayer(const Actor* a) const {
@@ -132,13 +125,6 @@ bool StudentWorld::playerInLineOfFire(const Actor* a) const {
 }
 
 /**
- * Adds a new actor to the world.
- */
-void StudentWorld::addActor(Actor* a) {
-    m_actors.push_back(a);
-}
-
-/**
  * Records that an alien was destroyed.
  */
 void StudentWorld::recordAlienDestroyed() {
@@ -146,12 +132,28 @@ void StudentWorld::recordAlienDestroyed() {
     m_numDestroyed++;
 }
 
+
 // Private member functions
+
+/**
+ * Removes all game objects that were marked dead during this tick.
+ */
+void StudentWorld::removeDeadGameObjects() {
+    vector<Actor*>::iterator it = m_actors.begin();
+    while (it != m_actors.end()) {
+        if (!(*it)->isAlive()) {
+            delete *it;
+            it = m_actors.erase(it);
+        } else {
+            it++;
+        }
+    }
+}
 
 /**
  * Handles introduction of new objects every tick, i.e. stars and alien ships
  */
-void StudentWorld::introduceNewObjects() {
+void StudentWorld::tryIntroduceNewObjects() {
     // 1/15 chance to introduce a star
     if (randInt(1, 15) == 1) {
         double startY = randInt(0, VIEW_HEIGHT - 1);

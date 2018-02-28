@@ -21,7 +21,7 @@ public:
     }
     virtual ~DamageableObject() {}
     
-    virtual void doSomething() = 0;
+    virtual void doSomething() = 0; // TODO polymorphism h4x?
     virtual void sufferDamage(double amt, int cause) = 0;
     
     void setHealth(double amt) { m_health = amt; }

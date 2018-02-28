@@ -23,12 +23,13 @@ public:
     NachenBlaster* getCollidingPlayer(const Actor* a) const;
     bool playerInLineOfFire(const Actor* a) const;
     
-    void addActor(Actor* a);
-    void recordAlienDestroyed();
+    void addActor(Actor* a) { m_actors.push_back(a); } // adds a new actor to the world
+    void recordAlienDestroyed(); // TODO MOVE THIS TO INLINE records that an alien was destroyed (i.e. by decrementing the world counter)
 
 private:
     // member functions
-    void introduceNewObjects();
+    void removeDeadGameObjects();
+    void tryIntroduceNewObjects();
     void updateGameText();
     
     // member variables
