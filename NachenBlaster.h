@@ -21,6 +21,8 @@ public:
     virtual ~NachenBlaster() {}
     
     virtual void doSomething();
+    
+    
 private:
     int m_health;
     int m_cabbage;

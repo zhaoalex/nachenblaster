@@ -1,8 +1,14 @@
 #include "StudentWorld.h"
 #include "GameConstants.h"
 #include <string>
+#include <iostream>
+#include <sstream>
+#include "Actor.h"
+
 #include "Star.h"
 #include "NachenBlaster.h"
+
+
 
 using namespace std;
 
@@ -40,7 +46,7 @@ int StudentWorld::init()
     for (int i = 0; i < 30; i++) {
         double startX = randInt(0, VIEW_WIDTH - 1);
         double startY = randInt(0, VIEW_HEIGHT - 1);
-        double size = randInt(5, 500) * 0.001; // for finer size possibilities
+        double size = randInt(5, 50) * 0.01;
         m_actors.push_back(new Star(this, startX, startY, size));
     }
     return GWSTATUS_CONTINUE_GAME;
@@ -77,7 +83,7 @@ int StudentWorld::move()
     }
     
     // update display text
-    // TODO
+    updateGameText();
     
     // possibly introduce new objects
     introduceNewObjects(); // TODO should this be at start of fcn?
@@ -98,13 +104,56 @@ void StudentWorld::cleanUp()
 }
 
 /**
+ * If at least one alien has collided with a, return a pointer to one of them;
+ * otherwise return a null pointer.
+ */
+Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
+    // TODO
+    return nullptr;
+}
+
+/**
+ * If player collided with a, return a pointer to the player;
+ * otherwise return a null pointer.
+ */
+NachenBlaster* StudentWorld::getCollidingPlayer(const Actor* a) const {
+    // TODO
+    return nullptr;
+}
+
+/**
+ * Return true if player is in line of fire of a.
+ */
+bool StudentWorld::playerInLineOfFire(const Actor* a) const {
+    // TODO
+    return false;
+}
+
+/**
+ * Adds a new actor to the world.
+ */
+void StudentWorld::addActor(Actor* a) {
+    m_actors.push_back(a);
+}
+
+/**
+ * Records that an alien was destroyed.
+ */
+void StudentWorld::recordAlienDestroyed() {
+    m_numRemaining--;
+    m_numDestroyed++;
+}
+
+// Private member functions
+
+/**
  * Handles introduction of new objects every tick, i.e. stars and alien ships
  */
 void StudentWorld::introduceNewObjects() {
     // 1/15 chance to introduce a star
     if (randInt(1, 15) == 1) {
         double startY = randInt(0, VIEW_HEIGHT - 1);
-        double size = randInt(5, 500) * 0.001; // for finer size possibilities
+        double size = randInt(5, 50) * 0.01;
         m_actors.push_back(new Star(this, VIEW_WIDTH - 1, startY, size));
     }
     
@@ -112,4 +161,13 @@ void StudentWorld::introduceNewObjects() {
     // TODO
     // int maxOnScreen = 4 + (0.5 * getLevel());
     
+}
+
+void StudentWorld::updateGameText() {
+    ostringstream oss;
+    oss.setf(ios::fixed);
+    oss.precision(0);
+    oss << "Lives: " << getLives() << " Health: " << "TEMP" << " Score: " << getScore()
+        << " Level: " << getLevel() << " Cabbages: " << "TEMP" << " Torpedoes: " << "TEMP"; // TODO
+    setGameStatText(oss.str());
 }

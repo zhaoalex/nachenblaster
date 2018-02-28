@@ -8,6 +8,7 @@
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
 class Actor;
+class NachenBlaster;
 
 class StudentWorld : public GameWorld
 {
@@ -17,11 +18,18 @@ public:
     virtual int init();
     virtual int move();
     virtual void cleanUp();
+    
+    Actor* getCollidingAlien(const Actor* a) const;
+    NachenBlaster* getCollidingPlayer(const Actor* a) const;
+    bool playerInLineOfFire(const Actor* a) const;
+    
+    void addActor(Actor* a);
+    void recordAlienDestroyed();
 
 private:
     // member functions
     void introduceNewObjects();
-    
+    void updateGameText();
     
     // member variables
     std::vector<Actor*> m_actors;

@@ -9,6 +9,9 @@
 #include "StudentWorld.h"
 #include "GameWorld.h"
 
+#include "Cabbage.h"
+#include "ExtraLifeGoodie.h"
+
 void NachenBlaster::doSomething() {
     if (!isAlive()) return;
     int ch;
@@ -36,10 +39,15 @@ void NachenBlaster::doSomething() {
                 break;
 
             case KEY_PRESS_SPACE: // fire cabbage
+                if (m_cabbage >= 5) {
+                    getWorld()->addActor(new ExtraLifeGoodie(getWorld(), getX() + 12, getY())); // TODO change to cabbage
+                    getWorld()->playSound(SOUND_PLAYER_SHOOT);
+                }
                 break;
             case KEY_PRESS_TAB: // fire torpedo
                 if (m_torpedoes > 0) {
-                    
+                    // TODO fire torpedo
+                    getWorld()->playSound(SOUND_TORPEDO);
                 }
                 break;
         }

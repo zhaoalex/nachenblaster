@@ -9,8 +9,8 @@
 #include "GraphObject.h"
 
 void Star::doSomething() {
-    if (getX() <= -1) {
-        setState(false);
+    if (isOffScreenLR()) {
+        setDead();
     } else {
         moveTo(getX() - 1, getY());
     }
