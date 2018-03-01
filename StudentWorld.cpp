@@ -36,6 +36,7 @@ StudentWorld::~StudentWorld() { // free anything that hasn't been freed
 int StudentWorld::init()
 {
     m_numRemaining = 6 + (4 * getLevel());
+    m_numAliensOnScreen = 0;
     
     // Place NachenBlaster
     m_player = new NachenBlaster(this);
@@ -73,7 +74,9 @@ int StudentWorld::move()
                 decLives();
                 return GWSTATUS_PLAYER_DIED;
             }
-            // TODO if nachen blaster won, return
+            if (m_numRemaining <= 0) { // if nachenblaster won
+                return GWSTATUS_PLAYER_WON;
+            }
         }
     }
     
@@ -108,7 +111,7 @@ void StudentWorld::cleanUp()
  * otherwise return a null pointer.
  */
 DamageableObject* StudentWorld::getCollidingAlien(const Actor* a) const {
-    // TODO
+    // TODO (also watch for DEAD ALIENS)
     return nullptr;
 }
 
@@ -126,8 +129,9 @@ NachenBlaster* StudentWorld::getCollidingPlayer(const Actor* a) const {
  * Return true if player is in line of fire of a.
  */
 bool StudentWorld::playerInLineOfFire(const Actor* a) const {
-    // TODO
-    return false;
+    return (m_player->getX() < a->getX() /* player is to the left of alien */
+            && a->getY() >= m_player->getY() - 4 /* alien is less than 4 pixels below player */
+            && a->getY() <= m_player->getY() + 4); /* alien is less than 4 pixels above player */
 }
 
 // Private member functions
@@ -162,10 +166,9 @@ void StudentWorld::tryIntroduceNewObjects() {
     // TODO
     int maxOnScreen = 4 + (0.5 * getLevel());
     int min = (m_numRemaining <= maxOnScreen) ? m_numRemaining : maxOnScreen; // min(m_numRemaining, maxOnScreen)
-    int currentShipsOnScreen = 0; // TODO
     
     // if true, we must introduce a new alien
-    if (currentShipsOnScreen < min) {
+    if (m_numAliensOnScreen < min) {
         int s1 = 60;
         int s2 = 20 + (getLevel() * 5);
         int s3 = 5 + (getLevel() * 10);

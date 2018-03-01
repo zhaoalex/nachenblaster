@@ -9,8 +9,16 @@
 #include "Alien.h"
 
 void Alien::doSomething() {
+    if (!isAlive()) return;
+    if (isOffScreenLR()) {
+        setDead();
+        return;
+    }
+    
     
 }
+
+
 
 void Alien::sufferDamage(double amt, int cause) {
     
