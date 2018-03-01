@@ -36,7 +36,6 @@ StudentWorld::~StudentWorld() { // free anything that hasn't been freed
 int StudentWorld::init()
 {
     m_numRemaining = 6 + (4 * getLevel());
-    m_numDestroyed = 0;
     
     // Place NachenBlaster
     m_player = new NachenBlaster(this);
@@ -131,15 +130,6 @@ bool StudentWorld::playerInLineOfFire(const Actor* a) const {
     return false;
 }
 
-/**
- * Records that an alien was destroyed.
- */
-void StudentWorld::recordAlienDestroyed() {
-    m_numRemaining--;
-    m_numDestroyed++;
-}
-
-
 // Private member functions
 
 /**
@@ -170,8 +160,24 @@ void StudentWorld::tryIntroduceNewObjects() {
     
     // Introduce any alien ships
     // TODO
-    // int maxOnScreen = 4 + (0.5 * getLevel());
+    int maxOnScreen = 4 + (0.5 * getLevel());
+    int min = (m_numRemaining <= maxOnScreen) ? m_numRemaining : maxOnScreen; // min(m_numRemaining, maxOnScreen)
+    int currentShipsOnScreen = 0; // TODO
     
+    // if true, we must introduce a new alien
+    if (currentShipsOnScreen < min) {
+        int s1 = 60;
+        int s2 = 20 + (getLevel() * 5);
+        int s3 = 5 + (getLevel() * 10);
+        int rand = randInt(1, s1 + s2 + s3);
+        if (rand <= s1) { // && rand >= 1; Smallgon
+            //TODO
+        } else if (rand > s1 && rand <= s2) { // Smoregon
+            
+        } else { // rand > s2 (&& rand <= s3); Snagglegon
+            
+        }
+    }
 }
 
 /**

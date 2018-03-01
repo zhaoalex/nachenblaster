@@ -25,7 +25,7 @@ public:
     bool playerInLineOfFire(const Actor* a) const;
     
     void addActor(Actor* a) { m_actors.push_back(a); } // adds a new actor to the world
-    void recordAlienDestroyed(); // TODO MOVE THIS TO INLINE records that an alien was destroyed (i.e. by decrementing the world counter)
+    void recordAlienDestroyed() { m_numRemaining--; } // records alien destroyed
 
 private:
     // member functions
@@ -35,8 +35,7 @@ private:
     
     // member variables
     std::vector<Actor*> m_actors;
-    int m_numDestroyed; // number of destroyed aliens
-    int m_numRemaining; // number of aliens required to be destroyed in order to move to next level
+    int m_numRemaining; // number of aliens left to be destroyed in order to move to next level
     
     NachenBlaster* m_player;
 };

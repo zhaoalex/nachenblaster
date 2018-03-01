@@ -66,6 +66,26 @@ void NachenBlaster::incHealth(double amt) {
     else setHealth(getHealth() + amt);
 }
 
+/**
+ * We have Alien's sufferDamage handle the case when alien ships collide with NachenBlaster.
+ */
 void NachenBlaster::sufferDamage(double amt, int cause) {
+    setHealth(getHealth() - amt);
+    
+    // play correct sounds
+    if (cause == HIT_BY_SHIP) {
+        getWorld()->playSound(SOUND_DEATH);
+    } else if (cause == HIT_BY_PROJECTILE) {
+        getWorld()->playSound(SOUND_BLAST);
+    }
+    
+    // if NachenBlaster died, set dead so the round can end
+    if (getHealth() <= 0) {
+        setDead();
+    }
+    
+    // dies: SOUND_DEATH
+    // collides w/ projectile: SOUND_BLAST
+    // collides w/ ship and survives: SOUND_DEATH
     
 }

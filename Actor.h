@@ -24,7 +24,7 @@ public:
     
     bool isAlive() const { return m_state; } // get state
     void setDead() { m_state = false; } // set dead
-    virtual bool isAlien() const { return false; } // default is not an alien
+    virtual bool isAlien() const { return false; } // default behavior is not alien
     
     // TODO protected?
     bool isOffScreenLR() const { return (getX() < 0) || (getX() >= VIEW_WIDTH); } // return true if off screen left or right
