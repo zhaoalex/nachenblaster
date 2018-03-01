@@ -9,6 +9,7 @@
 
 class Actor;
 class NachenBlaster;
+class DamageableObject;
 
 class StudentWorld : public GameWorld
 {
@@ -19,7 +20,7 @@ public:
     virtual int move();
     virtual void cleanUp();
     
-    Actor* getCollidingAlien(const Actor* a) const;
+    DamageableObject* getCollidingAlien(const Actor* a) const;
     NachenBlaster* getCollidingPlayer(const Actor* a) const;
     bool playerInLineOfFire(const Actor* a) const;
     

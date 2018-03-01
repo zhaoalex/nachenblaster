@@ -20,6 +20,7 @@ public:
     
     virtual void doSomething();
     virtual void sufferDamage(double amt, int cause);
+    virtual bool isAlien() const { return true; } // override to return true for all aliens
 };
 
 #endif /* Alien_h */

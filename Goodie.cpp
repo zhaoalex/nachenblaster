@@ -15,12 +15,12 @@ void Goodie::doSomething() {
         setDead();
         return;
     }
-    checkCollide();
+    handleCollide();
     moveTo(getX() - 0.75, getY() - 0.75);
-    checkCollide();
+    handleCollide();
 }
 
-void Goodie::checkCollide() {
+void Goodie::handleCollide() {
     NachenBlaster* player = getWorld()->getCollidingPlayer(this);
     if (player != nullptr) { // if collided
         getWorld()->increaseScore(100);

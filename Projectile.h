@@ -11,14 +11,29 @@
 #include "Actor.h"
 
 class StudentWorld;
+// class DamageableObject;
 
 class Projectile : public Actor {
 public:
-    Projectile(StudentWorld* world, int imageID, double startX, double startY, double damageAmt, double deltaX, bool rotates, int imageDir)
-    : Actor(world, imageID, startX, startY, 0, 0.5, 1) {}
+    Projectile(StudentWorld* world, int imageID, double startX, double startY, double damageAmt, double deltaX, bool rotates, int dir, bool isPlayerEnemy)
+    : Actor(world, imageID, startX, startY, dir, 0.5, 1) {
+        m_damageAmt = damageAmt;
+        m_deltaX = deltaX;
+        m_rotates = rotates;
+        m_playerEnemy = isPlayerEnemy;
+    }
     virtual ~Projectile() {}
     
-    virtual void doSomething() = 0;
+    virtual void doSomething(); // TODO polymorphism stuff?
+    // virtual void handleCollide() = 0; // TODO
+private:
+    // DamageableObject* didCollide();
+    bool didCollide();
+    
+    double m_damageAmt;
+    double m_deltaX;
+    bool m_rotates;
+    bool m_playerEnemy;
 };
 
 #endif /* Projectile_h */

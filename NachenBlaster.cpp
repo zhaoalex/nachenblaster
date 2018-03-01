@@ -10,7 +10,7 @@
 #include "GameWorld.h"
 
 #include "Cabbage.h"
-#include "ExtraLifeGoodie.h"
+#include "PlayerLaunchedTorpedo.h"
 
 void NachenBlaster::doSomething() {
     if (!isAlive()) return;
@@ -40,14 +40,14 @@ void NachenBlaster::doSomething() {
 
             case KEY_PRESS_SPACE: // fire cabbage
                 if (m_cabbages >= 5) {
-                    getWorld()->addActor(new ExtraLifeGoodie(getWorld(), getX() + 12, getY())); // TODO change to cabbage
+                    getWorld()->addActor(new Cabbage(getWorld(), getX() + 12, getY()));
                     getWorld()->playSound(SOUND_PLAYER_SHOOT);
                     m_cabbages -= 5;
                 }
                 break;
             case KEY_PRESS_TAB: // fire torpedo
                 if (m_torpedoes > 0) {
-                    // TODO fire torpedo
+                    getWorld()->addActor(new PlayerLaunchedTorpedo(getWorld(), getX() + 12, getY()));
                     getWorld()->playSound(SOUND_TORPEDO);
                     m_torpedoes--;
                 }

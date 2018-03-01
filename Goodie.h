@@ -22,7 +22,7 @@ public:
     virtual void doSomething();
     virtual void grantPowerup(NachenBlaster* player) = 0;
 private:
-    void checkCollide();
+    void handleCollide();
 };
 
 #endif /* Goodie_h */

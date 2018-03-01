@@ -6,6 +6,9 @@
 
 // Students:  Add code to this file, Actor.cpp, StudentWorld.h, and StudentWorld.cpp
 
+const int HIT_BY_SHIP = 0;
+const int HIT_BY_PROJECTILE = 1;
+
 class StudentWorld;
 
 class Actor : public GraphObject {
@@ -21,7 +24,7 @@ public:
     
     bool isAlive() const { return m_state; } // get state
     void setDead() { m_state = false; } // set dead
-    bool isAlien() const { return false; } // return true if alien TODO TODO TODO
+    virtual bool isAlien() const { return false; } // default is not an alien
     
     // TODO protected?
     bool isOffScreenLR() const { return (getX() < 0) || (getX() >= VIEW_WIDTH); } // return true if off screen left or right

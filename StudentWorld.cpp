@@ -49,6 +49,13 @@ int StudentWorld::init()
         double size = randInt(5, 50) * 0.01;
         m_actors.push_back(new Star(this, startX, startY, size));
     }
+    
+    
+    
+    m_player->incTorpedoes(100); // TODO
+    
+    
+    
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -101,7 +108,7 @@ void StudentWorld::cleanUp()
  * If at least one alien has collided with actor a, return a pointer to one of them;
  * otherwise return a null pointer.
  */
-Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
+DamageableObject* StudentWorld::getCollidingAlien(const Actor* a) const {
     // TODO
     return nullptr;
 }
@@ -111,7 +118,7 @@ Actor* StudentWorld::getCollidingAlien(const Actor* a) const {
  * otherwise return a null pointer.
  */
 NachenBlaster* StudentWorld::getCollidingPlayer(const Actor* a) const {
-    double dist = sqrt(pow(m_player->getX() - a->getX(), 2) + pow(m_player->getY() - a->getY(), 2));
+    double dist = sqrt(pow(m_player->getX() - a->getX(), 2) + pow(m_player->getY() - a->getY(), 2)); // euclidian distance
     if (dist < (0.75 * (m_player->getRadius() + a->getRadius()))) return m_player;
     else return nullptr;
 }
@@ -174,8 +181,8 @@ void StudentWorld::updateGameText() {
     ostringstream oss;
     oss.setf(ios::fixed);
     oss.precision(0);
-    oss << "Lives: " << getLives() << " Health: " << (m_player->getHealth() / 50.0 * 100)
-        << "% Score: " << getScore() << " Level: " << getLevel()
-        << " Cabbages: " << (m_player->numCabbages() / 30.0 * 100) << "% Torpedoes: " << m_player->numTorpedoes();
+    oss << "Lives: " << getLives() << "  Health: " << (m_player->getHealth() / 50.0 * 100)
+        << "%  Score: " << getScore() << "  Level: " << getLevel()
+        << "  Cabbages: " << (m_player->numCabbages() / 30.0 * 100) << "%  Torpedoes: " << m_player->numTorpedoes();
     setGameStatText(oss.str());
 }
