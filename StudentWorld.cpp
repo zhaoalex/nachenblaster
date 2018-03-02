@@ -110,10 +110,12 @@ void StudentWorld::cleanUp()
  */
 DamageableObject* StudentWorld::getCollidingAlien(const Actor* a) const {
     for (int i = 0; i < m_actors.size(); i++) {
-        if (m_actors[i]->isAlien() && m_actors[i]->isAlive()) { // after this point, all Actors will be of type Alien
+        if (m_actors[i]->isAlien() && m_actors[i]->isAlive()) {
+            // after this point, all Actors will be of type Alien...
             double dist = sqrt(pow(m_actors[i]->getX() - a->getX(), 2) + pow(m_actors[i]->getY() - a->getY(), 2)); // euclidian distance
             if (dist < (0.75 * (m_actors[i]->getRadius() + a->getRadius()))) {
-                return static_cast<DamageableObject*>(m_actors[i]); // thus we can cast to DamageableObject with certainty
+                // ...thus we can cast to DamageableObject with certainty
+                return static_cast<DamageableObject*>(m_actors[i]);
             }
         }
     }

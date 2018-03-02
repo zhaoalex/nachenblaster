@@ -31,7 +31,7 @@ void Alien::doSomething() {
             m_flightLength = randInt(1, 32);
         }
     }
-    if (m_flightLength == 0) { // aliens that don't use flight length will always skip this check
+    if (m_flightLength == 0) { // aliens that don't use flight length (i.e. Snagglegon) will always skip this check
         setDeltaY(randInt(-1, 1));
         m_flightLength = randInt(1, 32);
     }
@@ -56,7 +56,7 @@ void Alien::doSomething() {
  */
 void Alien::sufferDamage(double amt, int cause) {
     setHealth(getHealth() - amt);
-    // only cause will be projectiles; no need to check
+    // only cause will be projectiles; no need to check for ships
     if (getHealth() <= 0) {
         die();
     } else {

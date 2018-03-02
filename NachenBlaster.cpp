@@ -74,7 +74,6 @@ void NachenBlaster::sufferDamage(double amt, int cause) {
     // play correct sounds
     if (cause == HIT_BY_SHIP) {
         // SOUND_DEATH is already played in Alien::die(), so don't play it here
-        // although in this game two sounds can't play at once so it doesn't really matter ;)
         // getWorld()->playSound(SOUND_DEATH);
     } else if (cause == HIT_BY_PROJECTILE) {
         getWorld()->playSound(SOUND_BLAST);
