@@ -15,17 +15,19 @@ void Goodie::doSomething() {
         setDead();
         return;
     }
-    handleCollide();
+    if (handleCollide()) return;
     moveTo(getX() - 0.75, getY() - 0.75);
-    handleCollide();
+    if (handleCollide()) return;
 }
 
-void Goodie::handleCollide() {
+bool Goodie::handleCollide() {
     NachenBlaster* player = getWorld()->getCollidingPlayer(this);
     if (player != nullptr) { // if collided
         getWorld()->increaseScore(100);
         setDead();
         getWorld()->playSound(SOUND_GOODIE);
         grantPowerup(player);
+        return true;
     }
+    return false;
 }

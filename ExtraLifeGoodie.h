@@ -22,8 +22,6 @@ public:
     virtual ~ExtraLifeGoodie() {}
     
     virtual void grantPowerup(NachenBlaster* player);
-private:
-    
 };
 
 #endif /* ExtraLifeGoodie_h */

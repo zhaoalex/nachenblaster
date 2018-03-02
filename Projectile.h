@@ -24,7 +24,7 @@ public:
     }
     virtual ~Projectile() {}
     
-    virtual void doSomething(); // TODO polymorphism stuff?
+    virtual void doSomething();
 private:
     bool didCollide();
     

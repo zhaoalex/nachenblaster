@@ -22,8 +22,6 @@ public:
     virtual ~TorpedoGoodie() {}
     
     virtual void grantPowerup(NachenBlaster* player);
-private:
-    
 };
 
 #endif /* TorpedoGoodie_h */

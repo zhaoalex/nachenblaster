@@ -22,8 +22,6 @@ public:
     virtual ~RepairGoodie() {}
     
     virtual void grantPowerup(NachenBlaster* player);
-private:
-    
 };
 
 #endif /* RepairGoodie_h */

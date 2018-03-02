@@ -20,9 +20,12 @@ public:
     virtual ~Goodie() {}
     
     virtual void doSomething();
+    
+protected:
     virtual void grantPowerup(NachenBlaster* player) = 0;
+    
 private:
-    void handleCollide();
+    bool handleCollide();
 };
 
 #endif /* Goodie_h */

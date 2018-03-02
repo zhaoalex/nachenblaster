@@ -8,6 +8,9 @@
 
 #include "NachenBlaster.h"
 #include "Star.h"
+#include "Smallgon.h"
+#include "Smoregon.h"
+#include "Snagglegon.h"
 
 using namespace std;
 
@@ -50,12 +53,6 @@ int StudentWorld::init()
         m_actors.push_back(new Star(this, startX, startY, size));
     }
     
-    
-    
-    m_player->incTorpedoes(100); // TODO
-    
-    
-    
     return GWSTATUS_CONTINUE_GAME;
 }
 
@@ -75,7 +72,8 @@ int StudentWorld::move()
                 return GWSTATUS_PLAYER_DIED;
             }
             if (m_numRemaining <= 0) { // if nachenblaster won
-                return GWSTATUS_PLAYER_WON;
+                playSound(SOUND_FINISHED_LEVEL);
+                return GWSTATUS_FINISHED_LEVEL;
             }
         }
     }
@@ -111,7 +109,14 @@ void StudentWorld::cleanUp()
  * otherwise return a null pointer.
  */
 DamageableObject* StudentWorld::getCollidingAlien(const Actor* a) const {
-    // TODO (also watch for DEAD ALIENS)
+    for (int i = 0; i < m_actors.size(); i++) {
+        if (m_actors[i]->isAlien() && m_actors[i]->isAlive()) { // after this point, all Actors will be of type Alien
+            double dist = sqrt(pow(m_actors[i]->getX() - a->getX(), 2) + pow(m_actors[i]->getY() - a->getY(), 2)); // euclidian distance
+            if (dist < (0.75 * (m_actors[i]->getRadius() + a->getRadius()))) {
+                return static_cast<DamageableObject*>(m_actors[i]); // thus we can cast to DamageableObject with certainty
+            }
+        }
+    }
     return nullptr;
 }
 
@@ -163,7 +168,6 @@ void StudentWorld::tryIntroduceNewObjects() {
     }
     
     // Introduce any alien ships
-    // TODO
     int maxOnScreen = 4 + (0.5 * getLevel());
     int min = (m_numRemaining <= maxOnScreen) ? m_numRemaining : maxOnScreen; // min(m_numRemaining, maxOnScreen)
     
@@ -172,13 +176,15 @@ void StudentWorld::tryIntroduceNewObjects() {
         int s1 = 60;
         int s2 = 20 + (getLevel() * 5);
         int s3 = 5 + (getLevel() * 10);
-        int rand = randInt(1, s1 + s2 + s3);
-        if (rand <= s1) { // && rand >= 1; Smallgon
-            //TODO
-        } else if (rand > s1 && rand <= s2) { // Smoregon
-            
+        int randAlien = randInt(1, s1 + s2 + s3);
+        int randY = randInt(0, VIEW_HEIGHT - 1);
+        
+        if (randAlien <= s1) { // && rand >= 1; Smallgon
+            m_actors.push_back(new Smallgon(this, VIEW_WIDTH - 1, randY));
+        } else if (randAlien > s1 && randAlien <= s1 + s2) { // Smoregon
+            m_actors.push_back(new Smoregon(this, VIEW_WIDTH - 1, randY));
         } else { // rand > s2 (&& rand <= s3); Snagglegon
-            
+            m_actors.push_back(new Snagglegon(this, VIEW_WIDTH - 1, randY));
         }
     }
 }

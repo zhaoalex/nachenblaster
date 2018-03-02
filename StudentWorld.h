@@ -34,8 +34,6 @@ public:
     // records alien destroyed (aka health 0)
     void recordAlienDestroyed() { m_numRemaining--; }
     
-    
-
 private:
     // member functions
     void removeDeadGameObjects();

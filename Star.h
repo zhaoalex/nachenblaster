@@ -19,8 +19,6 @@ public:
     virtual ~Star() {}
     
     virtual void doSomething();
-private:
-    
 };
 
 #endif /* Star_h */

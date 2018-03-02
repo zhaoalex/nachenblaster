@@ -23,11 +23,12 @@ public:
     virtual void doSomething() = 0;
     
     bool isAlive() const { return m_state; } // get state
-    void setDead() { m_state = false; } // set dead
     virtual bool isAlien() const { return false; } // default behavior is not alien
-    
-    // TODO protected?
-    bool isOffScreenLR() const { return (getX() < 0) || (getX() >= VIEW_WIDTH); } // return true if off screen left or right
+
+protected:
+    void setDead() { m_state = false; } // set dead
+
+    bool isOffScreenLR() const { return (getX() < 0 || getX() >= VIEW_WIDTH); } // return true if off screen left or right
     
     StudentWorld* getWorld() const { return m_world; }
 private:
@@ -35,33 +36,4 @@ private:
     StudentWorld* m_world;
 };
 
-/*
-class Star : public Actor {
-public:
-    Star(StudentWorld* world, double startX, double startY, double size)
-    : Actor(world, IID_STAR, startX, startY, 0, size, 3) {}
-    virtual ~Star() {}
-    
-    virtual void doSomething();
-private:
-    
-};
-
-class NachenBlaster : public Actor {
-public:
-    NachenBlaster(StudentWorld* world)
-    : Actor(world, IID_NACHENBLASTER, 0, 128) {
-        m_health = 50;
-        m_cabbages = 30;
-        m_torpedoes = 0;
-    }
-    virtual ~NachenBlaster() {}
-    
-    virtual void doSomething();
-private:
-    int m_health;
-    int m_cabbages;
-    int m_torpedoes;
-};
-*/
 #endif // ACTOR_H_
