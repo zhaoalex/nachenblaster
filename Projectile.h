@@ -30,7 +30,7 @@ private:
     
     double m_damageAmt;
     double m_deltaX;
-    bool m_rotates;
+    bool m_rotates; // all rotating projectiles rotate by 20 degrees CCW
     bool m_playerEnemy;
 };
 

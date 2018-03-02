@@ -20,6 +20,10 @@ void Goodie::doSomething() {
     if (handleCollide()) return;
 }
 
+/**
+ * Handles collision of goodies with the player.
+ * Returns true if goodie did collide with the player.
+ */
 bool Goodie::handleCollide() {
     NachenBlaster* player = getWorld()->getCollidingPlayer(this);
     if (player != nullptr) { // if collided

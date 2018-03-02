@@ -17,7 +17,7 @@ void Alien::doSomething() {
         return;
     }
     
-    // #3 checkCollision
+    // check for collision with player (projectile collision is handled by Projectile)
     if (damageCollidingPlayer()) return;
     
     // possibly change flight plan
@@ -36,6 +36,7 @@ void Alien::doSomething() {
         m_flightLength = randInt(1, 32);
     }
     
+    // possibly fire at player
     if (getWorld()->playerInLineOfFire(this)) {
         if (possiblyFireAtPlayer()) return;
     }
@@ -44,7 +45,7 @@ void Alien::doSomething() {
     moveTo(getX() + (-1 * m_speed), getY() + (m_dy * m_speed));
     m_flightLength--;
     
-    // #3 checkCollision
+    // check collision once again
     if (damageCollidingPlayer()) return;
 }
 
