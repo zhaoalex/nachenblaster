@@ -14,7 +14,7 @@
 class Cabbage : public Projectile {
 public:
     Cabbage(StudentWorld* world, double startX, double startY)
-    : Projectile(world, IID_CABBAGE, startX, startY, 2, 8, true, 20, false) {}
+    : Projectile(world, IID_CABBAGE, startX, startY, 2, 8, true, 0, false) {}
     virtual ~Cabbage() {}
 };
 

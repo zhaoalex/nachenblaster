@@ -14,7 +14,7 @@
 class Turnip : public Projectile {
 public:
     Turnip(StudentWorld* world, double startX, double startY)
-    : Projectile(world, IID_TURNIP, startX, startY, 2, -6, true, 20, true) {}
+    : Projectile(world, IID_TURNIP, startX, startY, 2, -6, true, 0, true) {}
     virtual ~Turnip() {}
 };
 
