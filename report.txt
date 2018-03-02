@@ -1,15 +1,112 @@
 Alex Zhao
 CS 32, Project 3
 report.txt
-UID: 904907409
 
-Description of each public member function in each class, why it's defined in that class, why it's virtual or not
+1) Description of each public member function in each class, why it's defined in that class, why it's virtual or not
+
+For each class, constructors and destructors are public, and destructors are virtual because each portion of each object has to be destructed (to avoid memory leaks). Constructors will initalize its base class in the initalizer list as well as any member variables, and in general, destructors have no code (unless I explicitly state they do below).
+
+Also for each class, nearly all doSomething()s will first check if it is dead or not, and will exit immediately if it is; then, it will check whether it goes off the left or right sides of the screen, and call setDead() and return if it is. Only Explosion (because it dies on a timer), Goodie (because it also checks if it goes off the top and bottom sides of the screen), and NachenBlaster (because it cannot go off the sides of the screen) do not follow this rule. Each actor needs a doSomething() because StudentWorld calls this function every tick to allow the Actors to act.
+
+In StudentWorld:
+~StudentWorld() will call cleanUp() to free any allocated memory.
+
+init(), move(), and cleanUp() are all public and virtual because they're derived from GameWorld's virtual functions and are called by GameController. Nothing else in StudentWorld is virtual because nothing is derived from StudentWorld.
+
+DamageableObject* getCollidingAlien(const Actor* a) takes in an Actor pointer and returns a pointer to the first alien that collides with that actor (or nullptr if there are none). Collision is checked using the euclidian distance formula given in the spec. It's in StudentWorld because we let the world handle collisions with any actors in that world.
+
+NachenBlaster* getCollidingPlayer(const Actor* a) takes in an Actor and returns a pointer to the player if it collided with the player (or nullptr if it didn't). Collision is handled the same way. It's in StudentWorld because again, we let the world handle collisions with any actors in that world.
+
+bool playerInLineOfFire(const Actor* a) takes in an Actor and returns true if the player is in that actor's line of fire. It's in StudentWorld because we let StudentWorld handle interactions between multiple actors.
+
+void addActor(Actor* a) adds a new actor to the world. It's in StudentWorld because StudentWorld manages all actors in the game.
+
+void recordAlienOnScreen() records that a new alien was added to the screen, since we need to keep track of how many aliens are currently on the screen in order to determine whether to add new aliens to the screen. It's in StudentWorld because we determine whether to add new actors within move().
+
+void recordAlienOffScreen() records that an alien was removed from the screen for the same reason.
+
+void recordAlienDestroyed() records that an alien was destroyed (not just removed from the screen). It's in StudentWorld because we need to keep track of how many aliens are left to destroy in that level.
+
 
 In Actor:
-doSomething() is pure virtual because every Actor does something and in a different way
+void doSomething() is called for every actor and every tick, and it determines what each actor does. It is pure virtual because every Actor does something, and does it in a different way.
+
+bool isAlive() returns whether the actor is alive or dead. It is in the Actor base class because each actor will be either alive or dead, and StudentWorld uses death to determine whether or not that actor gets deleted.
+
+bool isAlien() returns whether or not the actor is an alien. It is virtual because not all actors are aliens, so aliens need to override the function to return true, while all other actors must return false.
+
+
+In Star:
+void doSomething() is derived from Actor (so it's virtual) and moves it left 1 pixel every tick.
+
+
+In Explosion:
+void doSomething() is derived from Actor (so it's virtual) and it increases in size each tick, then is destroyed after 4 ticks.
+
+
+In DamageableObject:
+void doSomething() is pure virtual because every damageable object does something different.
+
+void sufferDamage(double amt, int cause) handles any damageable object suffering damage. It's pure virtual because every damageable object handles taking damage differently. It's in DamageableObject because only damageable objects need to handle taking damage.
+
+void setHealth(double amt) sets the object's health. It's in DamageableObject because only damageable objects have health.
+
+double getHealth() returns the object's current health. It's in DamageableObject for the same reason.
+
+
+In NachenBlaster:
+void doSomething() gets any key inputs, and moves in its appropriate direction if a direction was pressed, or fires a cabbage or torpedo if the appropriate keys were pressed and the player has enough cabbages or torpedos. Then it receives one cabbage point per tick, up to 30 maximum cabbage points.
+
+void incHealth(double amt) increases the player's health, never exceeding 50 hit points. It's in NachenBlaster because the blaster has different logic for increasing health (there's a maximum).
+
+void sufferDamage(double amt, int cause) defines suffering damage for the player; it reduces the player's health by the correct amount, plays the correct sound based on the source of the damage, then checks if the player is dead.
+
+void incTorpedoes(int amt) increases the player's torpedo count. It's in NachenBlaster because only the player has a torpedo supply.
+
+int numTorpedoes() and int numCabbages() return the number of torpedoes and cabbages, respectively. It's in NachenBlaster because only the player has a torpedo and cabbage supply.
+
+
+In Alien:
+Alien() constructor also calls StudentWorld's recordAlienOnScreen(), and ~Alien() destructor also calls StudentWorld's recordAlienOffScreen() in order to keep track of the number of aliens on screen.
+
+void doSomething() checks if the alien collided with the player and returns if it did (logic is described in damageCollidingPlayer()). Projectile collisions are handled in the Projectile class.
+Then it determines whether to change the flight plan: if the alien hits the top or bottom of the screen, then it will change its Y direction to down or up respectively, and if the flight length is zero, then it will determine a new Y direction randomly. Then it will randomly generate a new flight path length if those conditions were met (unless the alien does not have a flight length).
+Then it will determine whether or not to fire at the player by first checking if the player is in its line of fire (StudentWorld's playerInLineOfFire()), and calling possiblyFireAtPlayer() if it is. If possiblyFireAtPlayer() returns true, then the function returns.
+Then it will move in its specified travel direction and reduce the flight length.
+Finally, it will check collision once more (again, using damageCollidingPlayer()).
+This function is in Alien because all Aliens share the same basic doSomething(), only overriding necessary functions.
+
+void sufferDamage(double amt, int cause) defines suffering damage for the alien; it reduces the alien's health by the correct amount, checks if the alien died and calls die() (a private function) if it did; otherwise it plays the appropriate sound.
+(die() sets the alien to dead, increases the score appropriately, plays the correct sound, adds an explosion, possibly drops a goodie (by calling possiblyDropGoodie()), then makes the StudentWorld record that an alien was destroyed (StudentWorld's recordAlienDestroyed()).)
+
+bool isAlien() overrides Actor's isAlien() to return true. It's in Alien because only aliens are Aliens.
+
+
+In Smallgon, Smoregon, and Snagglegon:
+Smallgon, Smoregon, and Snagglegon have no public member functions other than the constructor and destructor. (There are protected member functions possiblyDropGoodie() and possiblyFireAtPlayer(), both called in the public doSomething().)
+
+
+In Goodie:
+void doSomething() will check if it collided with the player (by calling handleCollide(), a private function) and return if it did. Then it will move itself 0.75 pixels down and left, and check collision with the player one more time. It's in Goodie because all Goodies share the same basic doSomething(), only overriding necessary functions.
+
+
+In ExtraLifeGoodie, RepairGoodie, and TorpedoGoodie:
+ExtraLifeGoodie, RepairGoodie, and TorpedoGoodie have no public member functions other than the constructor and destructor. (There is protected member function grantPowerup(NachenBlaster* player), overriding protected pure virtual grantPowerup() in Goodie and called in private handleCollide().)
+
+
+In Projectile:
+void doSomething() will
+
+
+
+
+
 
 Anything failed to finish / has bugs
 
 Design decisions / assumptions
+
+My design structure was similar to the one provided, with a few changes. Here is my hierarchy tree:
+
 
 How you tested each class (1-2 paragraphs per class)
