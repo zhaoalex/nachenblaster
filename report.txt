@@ -87,26 +87,32 @@ Smallgon, Smoregon, and Snagglegon have no public member functions other than th
 
 
 In Goodie:
-void doSomething() will check if it collided with the player (by calling handleCollide(), a private function) and return if it did. Then it will move itself 0.75 pixels down and left, and check collision with the player one more time. It's in Goodie because all Goodies share the same basic doSomething(), only overriding necessary functions.
+void doSomething() will check if it collided with the player (by calling didCollide(), a private function) and return if it did. Then it will move itself 0.75 pixels down and left, and check collision with the player one more time. It's in Goodie because all Goodies share the same basic doSomething(), only overriding necessary functions.
 
 
 In ExtraLifeGoodie, RepairGoodie, and TorpedoGoodie:
-ExtraLifeGoodie, RepairGoodie, and TorpedoGoodie have no public member functions other than the constructor and destructor. (There is protected member function grantPowerup(NachenBlaster* player), overriding protected pure virtual grantPowerup() in Goodie and called in private handleCollide().)
+ExtraLifeGoodie, RepairGoodie, and TorpedoGoodie have no public member functions other than the constructor and destructor. (There is protected member function grantPowerup(NachenBlaster* player), overriding protected pure virtual grantPowerup() in Goodie and called in private didCollide().)
 
 
 In Projectile:
-void doSomething() will
+void doSomething() will check if it collided with an alien or a player (by calling didCollide(), a private function) and return if it did. Then it will move itself left or right by a specified amount, and rotate 20 degrees counter clockwise if that specific projectile rotates. Then it checks collision one more time. It's in Projectile because all Projectiles share exactly the same doSomething(), only differing in their constructors.
+
+
+In Cabbage, Turnip, PlayerLaunchedTorpedo, AlienLaunchedTorpedo:
+Cabbage, Turnip, PlayerLaunchedTorpedo, and AlienLaunchedTorpedo have no public member functions other than the constructor and destructor.
 
 
 
+2) Anything failed to finish / has bugs
+
+I managed to finish everything, and my code has no bugs as far as personal testing and the sanity checker have shown.
 
 
-
-Anything failed to finish / has bugs
-
-Design decisions / assumptions
+3) Design decisions / assumptions
 
 My design structure was similar to the one provided, with a few changes. Here is my hierarchy tree:
 
 
-How you tested each class (1-2 paragraphs per class)
+
+4) How you tested each class (1-2 paragraphs per class)
+
