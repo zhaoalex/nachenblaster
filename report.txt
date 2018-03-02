@@ -112,6 +112,35 @@ I managed to finish everything, and my code has no bugs as far as personal testi
 
 My design structure was similar to the one provided, with a few changes. Here is my hierarchy tree:
 
+GameWorld
+	StudentWorld
+GraphObject
+	Actor
+		Star
+		Explosion
+		DamageableObject
+			NachenBlaster
+			Alien
+				Smallgon
+				Smoregon
+				Snagglegon
+		Goodie
+			ExtraLifeGoodie
+			RepairGoodie
+			TorpedoGoodie
+		Projectile
+			Cabbage
+			Turnip
+			PlayerLaunchedTorpedo
+			AlienLaunchedTorpedo
+
+// changing types for collision in studentworld
+// what handled what collision
+// changing torpedoes
+// letting alien handle player collision and not handling projectile collision
+// introducing new actors after all of move()
+// leaving nachenblaster in the actors list
+// having alien/projectile/goodie base classes handle most of the logic
 
 
 4) How you tested each class (1-2 paragraphs per class)
