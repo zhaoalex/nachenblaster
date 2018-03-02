@@ -21,6 +21,7 @@ public:
     : Goodie(world, IID_REPAIR_GOODIE, startX, startY) {}
     virtual ~RepairGoodie() {}
     
+protected:
     virtual void grantPowerup(NachenBlaster* player);
 };
 

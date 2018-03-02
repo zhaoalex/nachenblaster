@@ -33,6 +33,7 @@ protected:
     bool isOffScreenLR() const { return (getX() < 0 || getX() >= VIEW_WIDTH); }
     
     StudentWorld* getWorld() const { return m_world; }
+    
 private:
     bool m_living; // true means living, false means dead; default true
     StudentWorld* m_world;

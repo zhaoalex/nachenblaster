@@ -18,6 +18,7 @@ public:
     : Alien(world, IID_SNAGGLEGON, startX, startY, 10 * (1 + (world->getLevel() - 1) * 0.1), 15, -1, 1.75, 1000, false) {}
     virtual ~Snagglegon() {}
     
+protected:
     virtual void possiblyDropGoodie();
     virtual bool possiblyFireAtPlayer();
 };

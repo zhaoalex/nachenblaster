@@ -16,6 +16,7 @@ public:
     : Alien(world, IID_SMOREGON, startX, startY, 5 * (1 + (world->getLevel() - 1) * 0.1), 5, 0, 2.0, 250, true) {}
     virtual ~Smoregon() {}
     
+protected:
     virtual void possiblyDropGoodie();
     virtual bool possiblyFireAtPlayer();
 };

@@ -21,6 +21,7 @@ public:
     : Goodie(world, IID_LIFE_GOODIE, startX, startY) {}
     virtual ~ExtraLifeGoodie() {}
     
+protected:
     virtual void grantPowerup(NachenBlaster* player);
 };
 

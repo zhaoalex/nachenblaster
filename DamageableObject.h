@@ -26,6 +26,7 @@ public:
     
     void setHealth(double amt) { m_health = amt; }
     double getHealth() const { return m_health; }
+    
 private:
     double m_health;
 };

@@ -25,6 +25,7 @@ public:
     virtual ~Projectile() {}
     
     virtual void doSomething();
+    
 private:
     bool didCollide();
     

@@ -29,6 +29,7 @@ public:
     virtual void sufferDamage(double amt, int cause);
     
     virtual bool isAlien() const { return true; } // override to return true for all aliens
+    
 protected:
     virtual void possiblyDropGoodie() = 0;
     virtual bool possiblyFireAtPlayer() = 0;
@@ -36,6 +37,7 @@ protected:
     void setDeltaY(double y) { m_dy = y; }
     void setSpeed(double speed) { m_speed = speed; }
     void setFlightLength(int length) { m_flightLength = length; }
+    
 private:
     bool damageCollidingPlayer();
     void die();

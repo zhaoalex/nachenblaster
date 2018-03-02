@@ -21,6 +21,7 @@ public:
     : Goodie(world, IID_TORPEDO_GOODIE, startX, startY) {}
     virtual ~TorpedoGoodie() {}
     
+protected:
     virtual void grantPowerup(NachenBlaster* player);
 };
 
