@@ -183,7 +183,7 @@ void StudentWorld::tryIntroduceNewObjects() {
             m_actors.push_back(new Smallgon(this, VIEW_WIDTH - 1, randY));
         } else if (randAlien > s1 && randAlien <= s1 + s2) { // Smoregon
             m_actors.push_back(new Smoregon(this, VIEW_WIDTH - 1, randY));
-        } else { // rand > s2 (&& rand <= s3); Snagglegon
+        } else { // rand > (s1 + s2) (&& rand <= s1 + s2 + s3); Snagglegon
             m_actors.push_back(new Snagglegon(this, VIEW_WIDTH - 1, randY));
         }
     }

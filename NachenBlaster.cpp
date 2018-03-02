@@ -57,6 +57,9 @@ void NachenBlaster::doSomething() {
     }
 }
 
+/**
+ * Increase the player's health, never exceeding 50 hit points.
+ */
 void NachenBlaster::incHealth(double amt) {
     if (getHealth() + amt > 50) setHealth(50);
     else setHealth(getHealth() + amt);
@@ -70,7 +73,9 @@ void NachenBlaster::sufferDamage(double amt, int cause) {
     
     // play correct sounds
     if (cause == HIT_BY_SHIP) {
-        getWorld()->playSound(SOUND_DEATH);
+        // SOUND_DEATH is already played in Alien::die(), so don't play it here
+        // although in this game two sounds can't play at once so it doesn't really matter ;)
+        // getWorld()->playSound(SOUND_DEATH);
     } else if (cause == HIT_BY_PROJECTILE) {
         getWorld()->playSound(SOUND_BLAST);
     }
@@ -79,9 +84,4 @@ void NachenBlaster::sufferDamage(double amt, int cause) {
     if (getHealth() <= 0) {
         setDead();
     }
-    
-    // dies: SOUND_DEATH
-    // collides w/ projectile: SOUND_BLAST
-    // collides w/ ship and survives: SOUND_DEATH
-    
 }

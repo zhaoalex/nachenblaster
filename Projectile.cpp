@@ -27,6 +27,10 @@ void Projectile::doSomething() {
     if (didCollide()) return;
 }
 
+/**
+ * Handles collision of projectiles with both aliens and the player.
+ * Returns true if projectile did collide with something.
+ */
 bool Projectile::didCollide() {
     // is enemy is player, call player collide; is enemy is alien, call alien collide
     DamageableObject* actor = (m_playerEnemy) ? getWorld()->getCollidingPlayer(this) : getWorld()->getCollidingAlien(this);

@@ -15,7 +15,7 @@ class StudentWorld;
 class Explosion : public Actor {
 public:
     Explosion(StudentWorld* world, double startX, double startY)
-    : Actor(world, IID_EXPLOSION, startX, startY) {
+    : Actor(world, IID_EXPLOSION, startX, startY) { // + default params 0, 1, 0
         m_time = 0;
     }
     virtual ~Explosion() {}

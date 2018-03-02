@@ -24,7 +24,8 @@ public:
     NachenBlaster* getCollidingPlayer(const Actor* a) const;
     bool playerInLineOfFire(const Actor* a) const;
     
-    void addActor(Actor* a) { m_actors.push_back(a); } // adds a new actor to the world
+    // adds a new actor to the world
+    void addActor(Actor* a) { m_actors.push_back(a); }
     
     // records alien on screen; called in alien constructor
     void recordAlienOnScreen() { m_numAliensOnScreen++; }
