@@ -2,10 +2,12 @@
 AlexZhaoProj3Pt1.zip
 AlexZhaoProj3Pt2.zip
 spec.pdf
-DerivedData/
+DerivedData/*
 !DerivedData/NachenBlaster
+DerivedData/NachenBlaster/*
 !DerivedData/NachenBlaster/Build
-!DerivedData/NachenBlaster/Build/Products
+DerivedData/NachenBlaster/Build/*
 !DerivedData/NachenBlaster/Build/Products/Debug
+DerivedData/NachenBlaster/Build/Products/Debug/*
 !DerivedData/NachenBlaster/Build/Products/Debug/Assets/
 !DerivedData/NachenBlaster/Build/Products/Debug/Assets/*
