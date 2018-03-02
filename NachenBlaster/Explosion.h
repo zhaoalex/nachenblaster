@@ -21,6 +21,7 @@ public:
     virtual ~Explosion() {}
     
     virtual void doSomething();
+    
 private:
     int m_time;
 };

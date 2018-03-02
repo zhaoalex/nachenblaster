@@ -15,16 +15,16 @@ void Goodie::doSomething() {
         setDead();
         return;
     }
-    if (handleCollide()) return;
+    if (didCollide()) return;
     moveTo(getX() - 0.75, getY() - 0.75);
-    if (handleCollide()) return;
+    if (didCollide()) return;
 }
 
 /**
  * Handles collision of goodies with the player.
  * Returns true if goodie did collide with the player.
  */
-bool Goodie::handleCollide() {
+bool Goodie::didCollide() {
     NachenBlaster* player = getWorld()->getCollidingPlayer(this);
     if (player != nullptr) { // if collided
         getWorld()->increaseScore(100);

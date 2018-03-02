@@ -18,5 +18,4 @@ public:
     virtual ~PlayerLaunchedTorpedo() {}
 };
 
-
 #endif /* PlayerLaunchedTorpedo_h */

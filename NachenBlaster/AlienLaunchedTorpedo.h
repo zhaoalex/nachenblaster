@@ -18,5 +18,4 @@ public:
     virtual ~AlienLaunchedTorpedo() {}
 };
 
-
 #endif /* AlienLaunchedTorpedo_h */

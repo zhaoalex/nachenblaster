@@ -25,7 +25,7 @@ protected:
     virtual void grantPowerup(NachenBlaster* player) = 0;
     
 private:
-    bool handleCollide();
+    bool didCollide();
 };
 
 #endif /* Goodie_h */
