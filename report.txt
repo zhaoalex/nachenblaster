@@ -134,13 +134,26 @@ GraphObject
 			PlayerLaunchedTorpedo
 			AlienLaunchedTorpedo
 
-// changing types for collision in studentworld
-// what handled what collision
-// changing torpedoes
-// letting alien handle player collision and not handling projectile collision
-// introducing new actors after all of move()
-// leaving nachenblaster in the actors list
-// having alien/projectile/goodie base classes handle most of the logic
+To briefly describe the layout, StudentWorld extends GameWorld, of course, and handles most interactions between different actors; that's why it handles checking for collision and player in line of fire. It also handles general game details, like init()/move()/cleanUp(), managing and adding actors, and more.
+
+Actor extends GraphObject and is the base class for all Actors in the game. It simply acts as an abstract base class with doSometthing(), getting and getting living/dead state, getting the StudentWorld pointer, checking out-of-bounds, and checking isAlien().
+
+Star and Explosion are distinct in that they directly extend Actor without using another abstract base class, since they are fairly simple and do not interact with any other actor in the game. Stars simply scroll left and despawn, and explosions simply last for four ticks before despawn, so there is no need to implement more functionality than what Actor provides.
+
+DamageableObject handled anything that had health and could be damaged, namely the NachenBlaster and all Aliens. It added getting/setting health and a function to handle suffering damage; otherwise, this class was also a container class.
+
+Alien handled all aliens in the game, and in addition to overriding isAlien() to return true, it also added functions to drop goodies, fire at the player, and handle collision with the player. It also added flight speed, flight path length and direction, a score value, and ramming damage. The Alien base class actually implemented all Alien logic, except for dropping goodies and firing at the player, which Smallgon, Smoregon, and Snagglegon dealt with in their own ways; I did this to make it easier to add a new Alien in the future if needed.
+
+Goodie handled all goodies in the game (and directly extended Actor), and added functions to grant powerups and check for collisions with the player. Again, all logic was implemented in the Goodie base class, and ExtraLifeGoodie, RepairGoodie, and Torpedo only dealt with granting different powerups; again, I designed it this way so adding new goodies would be easy.
+
+Projectile handled all projectiles in the game (and directly extended Actor), and handled collision with both the player and aliens, damage amounts, speed, rotation, and enemy type. Again, all logic was implemented in the Projectile base class; in fact, Cabbage, Turnip, PlayerLaunchedTorpedo, and AlienLaunchedTorpedo contain their constructors and destructors and nothing more. (Like the example hierarchy, I chose to have two separate classes for Player- and AlienLaunchedTorpedoes, but I saw no need to have a base Torpedo class since the construction was so simple with my design.) This makes it extremely easy to add new Projectiles in the future.
+
+During this project, I did make some different design decisions and assumptions. While all collision checking was done in StudentWorld, I had different classes handle different collisions. Under my design, NachenBlaster handles no collisions on its own. Goodies handle colliding with the player, Projectiles handle colliding with both the player and all aliens, and Aliens only handle colliding with the player (unlike both players and projectiles, like the spec says; under this design, the end result is the same, as mentioned in the FAQ).
+
+For StudentWorld, it wasn't specified what container to use to store actors. I used a STL vector to store all actors because it offers fast access, which is good because we access the container 20 times a second; additionally, the main benefit of using a list (constant time insertion) is not needed here because I add all new actors to the end of the container. I assumed that attempting to introduce new stars and aliens into the game was done at the end of move(), after all Actors' doSomething()s had been called and dead game objects had been removed. Additionally, I chose to leave the NachenBlaster object in the actor container so special logic wouldn't be needed when calling doSomething(), and simply added a member variable in StudentWorld pointing to the NachenBlaster object so that getting the player would be easier. 
+
+One design decision I made in the Alien class was to have a flight plan length member variable for all Aliens (i.e. in the Alien class), even though Snaggletons don't have a flight length. What I chose to do was pass in a boolean in the constructor saying whether that alien uses a flight length or not, then initalized the length to either 0 (as defined in the spec for flight length aliens) or -1 (for non-flight-length aliens). This way, since the variable was decremented every tick, every m_flightLength == 0 check would be reached for aliens that used flight length, but would never be reached for non-flight-length aliens (since the variable started at -1 and kept decrementing). I chose to do this in order to simplify code, as I also knew that the variable would realistically never hit INT_MIN (the alien would be destroyed before that), so no real problems would arise.
+
 
 
 4) How you tested each class (1-2 paragraphs per class)
