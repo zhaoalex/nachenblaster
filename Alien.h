@@ -47,7 +47,9 @@ private:
     double m_speed;
     unsigned int m_scoreValue;
     
-    int m_flightLength; // starting length 0 means it uses flight length (i.e. Smallgon/Smoregon); starting length -1 means it doesn't (Snagglegon) since length will never hit 0 and reset
+    // starting length 0 means it uses flight length (i.e. Smallgon/Smoregon)
+    // starting length -1 means it doesn't (Snagglegon) since length will never hit 0 and reset
+    int m_flightLength;
 };
 
 #endif /* Alien_h */
